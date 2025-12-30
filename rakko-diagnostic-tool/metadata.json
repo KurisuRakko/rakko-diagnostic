@@ -1,0 +1,5 @@
+{
+  "name": "Rakko Diagnostic Tool",
+  "description": "A minimalist browser diagnostic tool that simulates a connection failure to Rakko systems and performs environment checks.",
+  "requestFramePermissions": []
+}
