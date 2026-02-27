@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rakko Diagnostic Tool</title>
+  <script type="module" crossorigin src="/assets/index-DLzbSGnS.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BmL9YXJU.css">
+  <script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();if(location.protocol!="file:"){window.__vite_is_modern_browser=true}</script>
+  <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- Legacy Mode Fallback -->
+    <div id="legacy-root">
+        <h1>Rakko System Lite</h1>
+        <div id="legacy-status">Checking environment...</div>
+
+        <div class="legacy-list">
+            <div class="legacy-item" id="check-google">Google: <span class="status-pending">Pending</span></div>
+            <div class="legacy-item" id="check-rakko">Rakko: <span class="status-pending">Pending</span></div>
+            <div class="legacy-item" id="check-cf">Cloudflare: <span class="status-pending">Pending</span></div>
+        </div>
+
+        <div class="legacy-info" id="legacy-info">Loading info...</div>
+
+        <a href="javascript:location.reload()" class="legacy-btn">Refresh / Reload</a>
+    </div>
+
+    <script>
+        (function () {
+            var ua = navigator.userAgent;
+            var isIE = ua.indexOf('MSIE ') > -1;
+            var isOldChrome = /Chrome\/(\d+)/.exec(ua);
+            var shouldRunLegacy = false;
+
+            if (isIE) {
+                var ieVersion = parseInt(ua.split('MSIE ')[1]);
+                if (ieVersion <= 10) shouldRunLegacy = true;
+            } else if (isOldChrome && parseInt(isOldChrome[1]) <= 45) {
+                shouldRunLegacy = true;
+            }
+
+            // Force legacy mode for debugging if ?legacy=true
+            if (window.location.search.indexOf('legacy=true') > -1) shouldRunLegacy = true;
+
+            if (shouldRunLegacy) {
+                document.getElementById('root').style.display = 'none';
+                document.getElementById('legacy-root').style.display = 'block';
+
+                // Basic Checks
+                function setStatus(id, text, className) {
+                    var el = document.getElementById(id);
+                    if (el) el.innerHTML = id.replace('check-', '') + ': <span class="' + className + '">' + text + '</span>';
+                }
+
+                function checkImage(id, url) {
+                    setStatus(id, 'Checking...', 'status-running');
+                    var img = new Image();
+                    img.onload = function () { setStatus(id, 'OK', 'status-success'); };
+                    img.onerror = function () { setStatus(id, 'Fail', 'status-error'); };
+                    img.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 't=' + new Date().getTime();
+                }
+
+                // Run Checks
+                setTimeout(function () { checkImage('check-google', 'https://www.google.com/favicon.ico'); }, 500);
+                setTimeout(function () { checkImage('check-rakko', 'https://rakko.cn/favicon.ico'); }, 1500);
+                setTimeout(function () { checkImage('check-cf', 'https://www.cloudflare.com/favicon.ico'); }, 2500);
+
+                // Info
+                var info = "UA: " + ua + "<br>";
+                info += "Screen: " + screen.width + "x" + screen.height + "<br>";
+                info += "Cookie: " + (navigator.cookieEnabled ? "Yes" : "No");
+                document.getElementById('legacy-info').innerHTML = info;
+            }
+        })();
+    </script>
+  <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+  <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy-BMrrauQU.js"></script>
+  <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/index-legacy-C_-rYVw0.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+</body>
+
+</html>

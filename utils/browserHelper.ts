@@ -4,7 +4,7 @@ export const getBrowserInfo = (): BrowserInfo => {
   const ua = navigator.userAgent;
   let tem;
   let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-  
+
   if (/trident/i.test(M[1])) {
     tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
     return {
@@ -12,10 +12,14 @@ export const getBrowserInfo = (): BrowserInfo => {
       version: tem[1] || '',
       os: getOS(ua),
       userAgent: ua,
-      isModern: false
+      isModern: false,
+      language: navigator.language || (navigator as any).userLanguage, // IE11
+      cookiesEnabled: navigator.cookieEnabled,
+      screenSize: `${screen.width}x${screen.height}`,
+      devicePixelRatio: window.devicePixelRatio || 1
     };
   }
-  
+
   if (M[1] === 'Chrome') {
     tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
     if (tem != null) {
@@ -24,14 +28,18 @@ export const getBrowserInfo = (): BrowserInfo => {
         version: tem[2],
         os: getOS(ua),
         userAgent: ua,
-        isModern: parseInt(tem[2], 10) > 80 // Arbitrary cutoff for "modern"
+        isModern: parseInt(tem[2], 10) > 80, // Arbitrary cutoff for "modern"
+        language: navigator.language,
+        cookiesEnabled: navigator.cookieEnabled,
+        screenSize: `${window.screen.width}x${window.screen.height}`,
+        devicePixelRatio: window.devicePixelRatio || 1
       };
     }
   }
-  
+
   M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
   if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
-  
+
   const version = M[1];
   const majorVersion = parseInt(version, 10);
   const name = M[0];
@@ -48,7 +56,11 @@ export const getBrowserInfo = (): BrowserInfo => {
     version,
     os: getOS(ua),
     userAgent: ua,
-    isModern
+    isModern,
+    language: navigator.language,
+    cookiesEnabled: navigator.cookieEnabled,
+    screenSize: `${window.screen.width}x${window.screen.height}`,
+    devicePixelRatio: window.devicePixelRatio || 1
   };
 };
 

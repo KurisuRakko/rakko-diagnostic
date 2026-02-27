@@ -1,0 +1,87 @@
+/* Basic reset for IE7/Chrome 40 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+}
+
+#legacy-root {
+    display: none;
+    /* Hidden by default, shown by JS */
+    width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.legacy-list {
+    text-align: left;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.legacy-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.status-pending {
+    color: #999;
+}
+
+.status-running {
+    color: #0066cc;
+    font-weight: bold;
+}
+
+.status-success {
+    color: #008800;
+    font-weight: bold;
+}
+
+.status-error {
+    color: #cc0000;
+    font-weight: bold;
+}
+
+.status-warning {
+    color: #cc9900;
+    font-weight: bold;
+}
+
+.legacy-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #000;
+}
+
+.legacy-btn:hover {
+    background: #555;
+}
+
+.legacy-info {
+    margin-top: 20px;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 12px;
+}

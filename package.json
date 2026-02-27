@@ -8,15 +8,17 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "lucide-react": "^0.562.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
-  },
   "devDependencies": {
     "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
+    "@vitejs/plugin-legacy": "^6.1.1",
+    "@vitejs/plugin-react": "^5.1.2",
+    "terser": "^5.44.1",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.294.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

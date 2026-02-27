@@ -6,10 +6,10 @@ export const LoadingIcon = ({ className }: { className?: string }) => (
 );
 
 export const WarningIcon = ({ className }: { className?: string }) => (
-  <img 
-    src="https://raw.githubusercontent.com/KurisuRakko/picx-images-hosting/master/1764686256744.2oc035awaa.webp" 
-    alt="Warning" 
-    className={`object-contain ${className}`} 
+  <img
+    src="https://raw.githubusercontent.com/KurisuRakko/picx-images-hosting/master/1764686256744.2oc035awaa.webp"
+    alt="Warning"
+    className={`object-contain ${className}`}
   />
 );
 

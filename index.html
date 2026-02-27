@@ -1,31 +1,84 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rakko Diagnostic</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rakko Diagnostic Tool</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
-  <body class="bg-white text-gray-900">
+
+<body>
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+
+    <!-- Legacy Mode Fallback -->
+    <link rel="stylesheet" href="./basic.css">
+    <div id="legacy-root">
+        <h1>Rakko diagnostic Lite 1.3</h1>
+        <div id="legacy-status">If you see this page, it means that your browser is too old.</div>
+
+        <div class="legacy-list">
+            <div class="legacy-item" id="check-google">Google: <span class="status-pending">Pending</span></div>
+            <div class="legacy-item" id="check-rakko">Rakko: <span class="status-pending">Pending</span></div>
+            <div class="legacy-item" id="check-cf">Cloudflare: <span class="status-pending">Pending</span></div>
+        </div>
+
+        <div class="legacy-info" id="legacy-info">Loading info...</div>
+
+        <a href="javascript:location.reload()" class="legacy-btn">Refresh / Reload</a>
+    </div>
+
+    <script>
+        (function () {
+            var ua = navigator.userAgent;
+            var isIE = ua.indexOf('MSIE ') > -1;
+            var isOldChrome = /Chrome\/(\d+)/.exec(ua);
+            var shouldRunLegacy = false;
+
+            if (isIE) {
+                var ieVersion = parseInt(ua.split('MSIE ')[1]);
+                if (ieVersion <= 10) shouldRunLegacy = true;
+            } else if (isOldChrome && parseInt(isOldChrome[1]) <= 45) {
+                shouldRunLegacy = true;
+            }
+
+            // Force legacy mode for debugging if ?legacy=true
+            if (window.location.search.indexOf('legacy=true') > -1) shouldRunLegacy = true;
+
+            if (shouldRunLegacy) {
+                document.getElementById('root').style.display = 'none';
+                document.getElementById('legacy-root').style.display = 'block';
+
+                // Basic Checks
+                function setStatus(id, text, className) {
+                    var el = document.getElementById(id);
+                    if (el) el.innerHTML = id.replace('check-', '') + ': <span class="' + className + '">' + text + '</span>';
+                }
+
+                function checkImage(id, url) {
+                    setStatus(id, 'Checking...', 'status-running');
+                    var img = new Image();
+                    img.onload = function () { setStatus(id, 'OK', 'status-success'); };
+                    img.onerror = function () { setStatus(id, 'Fail', 'status-error'); };
+                    img.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 't=' + new Date().getTime();
+                }
+
+                // Run Checks
+                setTimeout(function () { checkImage('check-google', 'https://www.google.com/favicon.ico'); }, 500);
+                setTimeout(function () { checkImage('check-rakko', 'https://rakko.cn/favicon.ico'); }, 1500);
+                setTimeout(function () { checkImage('check-cf', 'https://www.cloudflare.com/favicon.ico'); }, 2500);
+
+                // Info
+                var info = "UA: " + ua + "<br>";
+                info += "Screen: " + screen.width + "x" + screen.height + "<br>";
+                info += "Cookie: " + (navigator.cookieEnabled ? "Yes" : "No");
+                document.getElementById('legacy-info').innerHTML = info;
+            }
+        })();
+    </script>
+    <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

@@ -4,6 +4,10 @@ export interface BrowserInfo {
   os: string;
   userAgent: string;
   isModern: boolean;
+  language: string;
+  cookiesEnabled: boolean;
+  screenSize: string;
+  devicePixelRatio: number;
 }
 
 export type CheckStatus = 'pending' | 'running' | 'success' | 'error' | 'warning';
